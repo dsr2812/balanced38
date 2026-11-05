@@ -20,6 +20,13 @@ The published releases are on crates.io:
 This GitHub repository is the source mirror. Rust packages live on
 crates.io; no GitHub Packages are published here.
 
+## A note on the Hubble example
+
+The `libb38` README uses the Planck 2018 and SH0ES 2022 H₀ values as an
+exact-arithmetic receipt. It is **not** a cosmological result and does
+**not** solve the Hubble tension. The example shows only that the same
+subtraction returns the same exact fraction through Rust, C, and Python.
+
 ## What is proved, and what is tested
 
 The algebraic laws of the balanced base-38 lane and the signed-i128
