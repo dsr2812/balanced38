@@ -8,6 +8,16 @@ Public mirror of the published crates:
 An exact, honest, balanced signed base-38 integer lane, with an exact
 rational layer and a C-ABI key.
 
+## Where the releases live
+
+The published releases are on crates.io:
+
+- [`balanced38` 1.2.0](https://crates.io/crates/balanced38/1.2.0)
+- [`libb38` 0.3.1](https://crates.io/crates/libb38/0.3.1)
+
+This GitHub repository is the source mirror. Rust packages live on
+crates.io; no GitHub Packages are published here.
+
 ## What is proved, and what is tested
 
 The algebraic laws of the balanced base-38 lane and the signed-i128
