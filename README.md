@@ -1,5 +1,7 @@
 # balanced38
 
+[![verify](https://github.com/dsr2812/balanced38/actions/workflows/verify.yml/badge.svg)](https://github.com/dsr2812/balanced38/actions/workflows/verify.yml)
+
 Public mirror of the published crates:
 
 - [`balanced38` 1.2.0](https://crates.io/crates/balanced38/1.2.0)
