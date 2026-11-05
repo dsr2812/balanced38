@@ -1,0 +1,8 @@
+/target
+**/target/
+python/build/
+python/libb38.egg-info/
+python/libb38/liblibb38*.so
+python/libb38/liblibb38*.dylib
+python/libb38/liblibb38*.dll
+python/**/__pycache__/

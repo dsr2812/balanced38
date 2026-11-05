@@ -1,0 +1,213 @@
+.TH B38 1 "November 2026" "libb38 0.3.1" "libb38"
+.SH NAME
+b38_add, b38_sub, b38_mul, b38_div_rem, b38_neg, b38_to_i128, b38_from_i128, b38_cmp, b38_ratio_add, b38_ratio_sub, b38_ratio_mul, b38_ratio_div, b38_ratio_neg, b38_ratio_cmp, b38_ratio_to_radix, b38_ratio_from_radix, b38_free, b38_version \-
+balanced base-38 exact arithmetic
+.SH SYNOPSIS
+.B #include <b38.h>
+.sp
+.BI "char *b38_add(const char *" a ", const char *" b ");"
+.BI "char *b38_sub(const char *" a ", const char *" b ");"
+.BI "char *b38_mul(const char *" a ", const char *" b ");"
+.BI "char *b38_neg(const char *" a ");"
+.BI "int b38_div_rem(const char *" a ", const char *" b ", char **" out_q ", char **" out_r ");"
+.BI "int b38_to_i128(const char *" a ", __int128 *" out ");"
+.BI "int b38_from_i128(__int128 " v ", char **" out ");"
+.BI "int b38_cmp(const char *" a ", const char *" b ");"
+.BI "char *b38_ratio_add(const char *" a ", const char *" b ");"
+.BI "char *b38_ratio_sub(const char *" a ", const char *" b ");"
+.BI "char *b38_ratio_mul(const char *" a ", const char *" b ");"
+.BI "char *b38_ratio_div(const char *" a ", const char *" b ");"
+.BI "char *b38_ratio_neg(const char *" a ");"
+.BI "int b38_ratio_cmp(const char *" a ", const char *" b ");"
+.BI "char *b38_ratio_to_radix(const char *" a ");"
+.BI "char *b38_ratio_from_radix(const char *" a ");"
+.BI "void b38_free(char *" s ");"
+.BI "unsigned int b38_version(void);"
+.SH DESCRIPTION
+.B libb38
+is a drop-in exact-arithmetic layer: it computes with balanced base-38
+strings exactly, with no rounding, no overflow surprises, and no
+binary-to-decimal conversion tax. It wraps the balanced base-38 lane;
+the arithmetic laws and the signed-i128 refusal contract are proved in
+Lean for the mathematical model, and the Rust implementation is tested
+against them.
+.PP
+The two string operators,
+.BR b38_add ()
+and
+.BR b38_sub (),
+add or subtract (subtraction IS addition of the negation, the
+reflection law) two balanced base-38 strings and return a newly
+allocated string holding the exact result.
+.BR b38_mul ()
+returns the exact product.
+.BR b38_neg ()
+returns the negation.
+.PP
+.BR b38_div_rem ()
+computes the Euclidean quotient and remainder of
+.I a
+/ 
+.IR b :
+the remainder always lies in \fB0..|b|\fR. The quotient string is
+written to
+.I *out_q
+and the remainder string to
+.IR *out_r ;
+returns 0 on success, \-1 on refusal.
+.PP
+.BR b38_to_i128 ()
+parses a string and writes its exact value to
+.IR *out ,
+the honest shore door: a string whose value sits beyond the i128 shore
+refuses (\-1), never wraps. Returns 0 on success.
+.PP
+.BR b38_from_i128 ()
+formats an exact \fB__int128\fR value as its canonical balanced base-38
+string, written to
+.I *out
+(the caller frees it). The value never refuses; only allocation
+failure returns \-1.
+.PP
+.BR b38_cmp ()
+orders two strings as exact integers, like
+.BR strcmp (3):
+negative if
+.I a
+<
+.IR b ,
+zero if equal, positive if
+.I a
+>
+.IR b .
+It returns \-1, 0, or +1; a bad input returns
+.B B38_CMP_REFUSAL
+(1000000), a value no valid comparison ever returns.
+.PP
+The v3 ration doors are THE PROMISE'S STORE: exact fractions, never
+views. The string
+.RS
+.I p/q
+.RE
+means the reduced fraction with the sign on the numerator and a
+positive denominator (\fB"+5/+4"\fR); a bare integer rides as
+.IR n/1 ,
+zero is
+.BR "0" .
+.BR b38_ratio_add (),
+.BR b38_ratio_sub (),
+.BR b38_ratio_mul (),
+and
+.BR b38_ratio_div ()
+add, subtract, multiply, and divide (by the reciprocal, refusing a
+zero divisor) exactly.
+.BR b38_ratio_neg ()
+negates.
+.BR b38_ratio_cmp ()
+orders two fractions exactly by cross-products, returning \-1, 0, +1
+and
+.B B38_CMP_REFUSAL
+when a cross-product crosses the i128 shore.
+.PP
+The radix doors are VIEWS over the fraction store, never the storage.
+.BR b38_ratio_to_radix ()
+hands back the exact base-38 expansion with its recurring block wrapped
+in trailing parentheses: a third is
+.BR "0.(cp)" ,
+three quarters is
+.BR "0.sj" ,
+a thirty-eighth is
+.BR "0.1" .
+The Euclidean (floor) split puts the sign on the integer part, so minus
+one half reads
+.BR "\-1.j" .
+A period at or beyond 2^16 digits, or a long-division step whose 38*r
+product crosses the i128 shore, refuses (NULL). 
+.BR b38_ratio_from_radix ()
+re-reads such a string into the canonical fraction
+(\fB"0.(cp)"\fR back to
+.BR "+1/+3" ),
+refusing malformed strings and any view whose closed form crosses the
+shore \-\- a long view refuses to re-read rather than lie.
+.PP
+The caller owns every returned string and must free it with
+.BR b38_free ().
+All
+.B libb38
+functions take a non-NULL string arguments (NULL is undefined
+behaviour); they refuse bad input loudly rather than guess.
+.PP
+.BR b38_version ()
+returns the C-ABI version (currently 3). A caller should check it
+before trusting the surface; it is bumped on every breaking change.
+.SH THE STRING FORMAT
+A balanced base-38 number is a signed, most-significant-first string
+over the 38-character alphabet
+.BR "0-9 a-z _ ~" ,
+where the 38 symbols stand for the digit values 0 through 37.
+.PP
+The sign is an optional leading
+.B +
+or
+.BR \- .
+The string
+.B 0
+is zero (the Void). There are no leading zeros, and every integer value
+has exactly one string. Examples:
+.TS
+tab(@);
+l l .
+.+f@plus fifteen
+.-7@minus seven
+.1z@1\*38+35, i.e. seventy-three
+.1_@seventy-four (a carry lands on the highest gap digit)
+.+6c@two hundred forty
+.TE
+.SH RETURN VALUE
+The string operators return NULL on any error: malformed input (empty,
+leading zero, or a character outside the alphabet), a result whose
+magnitude exceeds the i128 shore, or allocation failure. The integer
+doors refuse with \-1 (and
+.BR b38_cmp ,
+with
+.BR B38_CMP_REFUSAL ).
+Nothing ever wraps; every refusal is loud.
+.SH EXAMPLE
+.nf
+#include <stdio.h>
+#include <b38.h>
+
+int main(void) {
+    char *s = b38_mul("f", "g");  /* 15 * 16 = 240 -> "+6c" */
+    if (s == NULL) { fprintf(stderr, "refused\\n"); return 1; }
+    puts(s);
+    b38_free(s);
+    __int128 v = 0;
+    if (b38_to_i128("+528", &v) != 0) { fprintf(stderr, "refused\\n"); return 1; }
+    printf("%lld\\n", (long long)v);  /* 7304 */
+    return 0;
+}
+.fi
+.SH BUILDING
+.RS
+From a fresh clone of this workspace, the proof is three lines,
+in this order (the -I/-L paths are relative to the WORKSPACE ROOT, where
+cargo build lands target/debug/liblibb38.so):
+.PP
+cargo build -p libb38
+.PP
+cc crates/libb38/examples/smoke.c -I crates/libb38/include -L target/debug -Wl,-rpath,$PWD/target/debug -llibb38 -o smoke
+.PP
+./smoke
+.PP
+libb38 version 3 (or newer) / ALL SMOKE CHECKS PASS
+.RE
+.SH SEE ALSO
+.BR bc (1),
+.BR strcmp (3),
+.BR python3 (1)
+.PP
+The library, the header, the Python wheel, and this page live in this
+repository under crates/libb38/.
+.SH AUTHOR
+Daniel Doyle.

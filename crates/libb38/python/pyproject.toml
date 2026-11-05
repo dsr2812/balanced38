@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "libb38"
+version = "0.3.1"
+description = "libb38: the key. Balanced base-38 strings in, exact sum out. No rounding, no overflow surprises."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+
+[tool.setuptools]
+packages = ["libb38"]
+package-data = { libb38 = ["liblibb38*.so", "liblibb38*.dylib", "liblibb38*.dll"] }

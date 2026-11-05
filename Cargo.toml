@@ -1,0 +1,6 @@
+[workspace]
+resolver = "2"
+members = ["crates/balanced38", "crates/libb38"]
+
+[patch.crates-io]
+balanced38 = { path = "crates/balanced38" }
