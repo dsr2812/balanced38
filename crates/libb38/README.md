@@ -35,8 +35,19 @@ exact answers out — add, sub, mul, div_rem, neg, cmp, and the honest
 i128 doors. No runtime, no dependencies. Rust crate, Python wheel, and
 a man page.
 
-From a fresh clone, the hand-it-to-a-stranger proof is these three
-lines, in this order — build, link, run:
+From a fresh crate directory (the crates.io tarball), the
+hand-it-to-a-stranger proof is these three lines — build, link, run:
+
+```
+cargo build
+cc examples/smoke.c -I include \
+   -L target/debug -Wl,-rpath,$PWD/target/debug -llibb38 -o smoke
+./smoke
+libb38 version 3
+ALL SMOKE CHECKS PASS
+```
+
+From this workspace, the same proof uses the workspace paths:
 
 ```
 cargo build -p libb38
@@ -47,9 +58,8 @@ libb38 version 3
 ALL SMOKE CHECKS PASS
 ```
 
-The `-L` / `-I` paths are relative to the WORKSPACE ROOT (where the
-`cargo build` lands `target/debug/liblibb38.so`); the man page's BUILDING
-section carries the same spell.
+The `-L` / `-I` paths follow the directory you build from; the man page's
+BUILDING section carries the same spell.
 
 ## The Hubble receipt — one sum, three doors
 
@@ -160,6 +170,14 @@ The wheel bundles the native library; the consumer needs no compiler.
 ## Man page
 
 `man b38_add` once `dist/b38_add.1` is installed (see `docs/b38_add.1`).
+
+## What this is not
+
+- **Not a refinement proof.** The Lean model is proved in the companion
+  crate; the C/Rust ABI is tested against it, not proved equivalent.
+- **Not a general-purpose encoder or crypto library.** It is a balanced
+  base-38 arithmetic lane, not a text encoding for arbitrary bytes.
+- **Not infinite precision.** The i128 shore refuses; it does not wrap.
 
 ## The line
 

@@ -4,6 +4,15 @@ All notable changes to the balanced38 crate. The ledger is part of the
 shipment: nothing here is claimed that the Lean certificate and the
 differential oracle do not also claim.
 
+## [1.2.1] — 2026-11-06
+
+The front-door patch. **No arithmetic or API changes.**
+
+- **Repository link** — the public mirror is now declared in Cargo.toml:
+  `https://github.com/dsr2812/balanced38`.
+- **README** — a short “What this is not” section: not a refinement
+  proof, not a general big-integer library, not a base64-style encoder.
+
 ## [1.2.0] — 2026-11-04
 
 The honest-front-door release. The arithmetic contract is unchanged; the

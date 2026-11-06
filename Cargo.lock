@@ -4,14 +4,14 @@ version = 3
 
 [[package]]
 name = "balanced38"
-version = "1.2.0"
+version = "1.2.1"
 dependencies = [
  "smallvec",
 ]
 
 [[package]]
 name = "libb38"
-version = "0.3.1"
+version = "0.3.2"
 dependencies = [
  "balanced38",
  "smallvec",

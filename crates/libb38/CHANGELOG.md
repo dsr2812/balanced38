@@ -3,6 +3,15 @@
 All notable changes to the libb38 crate. The receipt is in every build's
 smoke test; this ledger just numbers them.
 
+## [0.3.2] — 2026-11-06
+
+The front-door patch. **C-ABI stays v3; no new operations.**
+
+- **Repository link** — the public mirror is now declared in Cargo.toml.
+- **Dependency pin** — `balanced38 = "1.2.1"`.
+- **README** — a “What this is not” section, and separate C build/link
+  commands for the crate directory and the workspace.
+
 ## [0.3.1] — 2026-11-04
 
 The honest-front-door patch. **C-ABI stays v3; no new operations.**

@@ -4,8 +4,8 @@
 
 Public mirror of the published crates:
 
-- [`balanced38` 1.2.0](https://crates.io/crates/balanced38/1.2.0)
-- [`libb38` 0.3.1](https://crates.io/crates/libb38/0.3.1)
+- [`balanced38` 1.2.1](https://crates.io/crates/balanced38/1.2.1)
+- [`libb38` 0.3.2](https://crates.io/crates/libb38/0.3.2)
 
 An exact, honest, balanced signed base-38 integer lane, with an exact
 rational layer and a C-ABI key.
@@ -14,8 +14,8 @@ rational layer and a C-ABI key.
 
 The published releases are on crates.io:
 
-- [`balanced38` 1.2.0](https://crates.io/crates/balanced38/1.2.0)
-- [`libb38` 0.3.1](https://crates.io/crates/libb38/0.3.1)
+- [`balanced38` 1.2.1](https://crates.io/crates/balanced38/1.2.1)
+- [`libb38` 0.3.2](https://crates.io/crates/libb38/0.3.2)
 
 This GitHub repository is the source mirror. Rust packages live on
 crates.io; no GitHub Packages are published here.

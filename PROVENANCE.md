@@ -6,8 +6,8 @@ This repository is a clean public mirror, not the private workshop.
 
 | crate | version | crates.io checksum |
 |---|---|---|
-| `balanced38` | 1.2.0 | `6a4cdc2908e9f2704e780751bfc3a148cc8f1670fe4c6eda97bda6c6bd75466a` |
-| `libb38` | 0.3.1 | `cf152d1a481d50a0852ba07221a484a3289d524d59bb6891045f3f30ba3eb5b4` |
+| `balanced38` | 1.2.1 | `36fb38d0b54036c75c5de0dd6c5d729ea296b60e0b385036da777226d0bbe18a` |
+| `libb38` | 0.3.2 | `10b713d6fd0b6b1aaa29a71945d6bbe8ac5b612db03414db4d8a13c815fbef72` |
 
 ## What was omitted
 

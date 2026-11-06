@@ -88,6 +88,15 @@ implements it is tested, not refined.
 
 MIT licensed, zero dependencies beyond `smallvec`.
 
+## What this is not
+
+- **Not a refinement proof.** The Lean model is proved; the Rust
+  implementation is tested against it. There is no proof linking the two.
+- **Not a general-purpose big-integer library.** It is an i128-shore lane;
+  the checked doors refuse beyond the shore.
+- **Not a base64-style encoder.** It is a balanced arithmetic lane, not a
+  text encoding for arbitrary bytes.
+
 ## License
 
 MIT — see [LICENSE](LICENSE). Copyright © Daniel Doyle & dsR1.
